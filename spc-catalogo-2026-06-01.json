@@ -1,3 +1,4 @@
+	
 _schema	"spc-catalog-v2"
 _note	"Todas las imágenes deben ser URLs externas. NO base64."
 products	
@@ -46,4 +47,4 @@ email	"proveedor@ejemplo.com"
 phone	""
 social	""
 notes	"Agregar datos reales del proveedor"
-exported	"2026-06-03T14:25:24.008Z"
+exported	"2026-06-03T15:42:47.424Z"
