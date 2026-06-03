@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Small Print Collective — Tienda</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0a0704;
+  --ink2:      #120e09;
+  --ash:       #1e1a15;
+  --ash2:      #2a2520;
+  --ghost:     #d4c9b8;
+  --parchment: #f0e8d5;
+  --gold:      #c9a84c;
+  --gold2:     #e8c96a;
+  --gold-dim:  rgba(201,168,76,0.15);
+  --blood:     #8b1a1a;
+  --ember:     #d4522a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: 'IM Fell English', serif;
+  overflow-x: hidden;
+}
+
+/* NOISE */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: .32;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(10,7,4,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 900;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.nav-logo-mark {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .82rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.1;
+  letter-spacing: .02em;
+}
+
+.nav-logo-mark small {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: .42rem;
+  letter-spacing: .38em;
+  color: var(--ghost);
+  opacity: .45;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Cinzel', serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ghost);
+  text-decoration: none;
+  transition: color .2s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform .3s;
+}
+
+.nav-links a:hover { color: var(--parchment); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-wa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  border: none;
+  padding: 8px 18px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s;
+}
+.nav-wa:hover { background: var(--gold2); }
+
+.hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  padding: 7px 12px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: var(--ink2);
+  border-bottom: 1px solid var(--gold-dim);
+  padding: 24px 32px;
+  z-index: 899;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Cinzel', serif;
+  font-size: .8rem;
+  color: var(--ghost);
+  text-decoration: none;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(201,168,76,.06);
+}
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 100px 40px 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero-radial {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 38%, rgba(139,26,26,.13) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 45% at 20% 85%, rgba(201,168,76,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 82% 18%, rgba(201,168,76,.04) 0%, transparent 60%);
+}
+
+/* Rotating rings */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,.07);
+  top: 50%; left: 50%;
+  animation: spin linear infinite;
+}
+.ring:nth-child(1) { width: 640px; height: 640px; margin: -320px 0 0 -320px; animation-duration: 50s; }
+.ring:nth-child(2) { width: 900px; height: 900px; margin: -450px 0 0 -450px; animation-duration: 80s; animation-direction: reverse; }
+.ring:nth-child(3) { width: 420px; height: 420px; margin: -210px 0 0 -210px; animation-duration: 30s; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Hero sigil */
+.hero-sigil {
+  position: absolute;
+  width: 380px; height: 380px;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  opacity: .035;
+  animation: spinSlow 150s linear infinite;
+}
+@keyframes spinSlow { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .45em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp .9s ease .2s forwards;
+}
+
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  font-weight: 900;
+  line-height: .88;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp .9s ease .45s forwards;
+}
+
+.hero-title .line-the {
+  display: block;
+  font-size: clamp(1rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.hero-title .line-print {
+  display: block;
+  background: linear-gradient(130deg, var(--parchment) 25%, var(--gold2) 55%, var(--parchment) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-text-stroke: 1px rgba(201,168,76,.2);
+}
+
+.hero-title .line-collective {
+  display: block;
+  font-size: clamp(1rem, 3.2vw, 2.6rem);
+  letter-spacing: .3em;
+  color: var(--ghost);
+  margin-top: 12px;
+}
+
+.hero-ornament {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 38px auto;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp .9s ease .75s forwards;
+}
+
+.hero-ornament::before, .hero-ornament::after {
+  content: '';
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.hero-ornament::after { background: linear-gradient(to left, transparent, var(--gold)); }
+
+.hero-tagline {
+  font-size: clamp(.85rem, 2vw, 1.08rem);
+  color: var(--ghost);
+  max-width: 480px;
+  line-height: 1.9;
+  font-style: italic;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp .9s ease 1s forwards;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  margin-top: 48px;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp .9s ease 1.2s forwards;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-hero-primary {
+  font-family: 'Space Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s;
+  display: inline-block;
+}
+.btn-hero-primary:hover { background: var(--gold2); }
+
+.btn-hero-ghost {
+  font-family: 'Space Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 13px 36px;
+  background: none;
+  color: var(--parchment);
+  border: 1px solid rgba(201,168,76,.35);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+  display: inline-block;
+}
+.btn-hero-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,.05); }
+
+.hero-stamp {
+  position: relative;
+  z-index: 2;
+  margin-top: 60px;
+  border: 2px solid var(--blood);
+  padding: 9px 28px;
+  font-family: 'Space Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .2em;
+  color: var(--blood);
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  display: inline-block;
+  opacity: 0;
+  animation: stampIn .5s ease 1.9s forwards;
+}
+.hero-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(139,26,26,.25);
+}
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes stampIn { from { opacity:0; transform:rotate(-2deg) scale(1.25); } to { opacity:1; transform:rotate(-2deg) scale(1); } }
+
+/* ── SECTION BASE ── */
+.section {
+  padding: 100px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .5em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: .6;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: var(--parchment);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-lead {
+  font-style: italic;
+  color: var(--ghost);
+  font-size: 1rem;
+  line-height: 1.85;
+  max-width: 560px;
+  opacity: .75;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  border: none;
+  margin: 0;
+}
+
+/* ── CATALOG ── */
+#catalogo { border-top: 1px solid rgba(201,168,76,.08); }
+
+.catalog-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: .5rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  background: none;
+  border: 1px solid rgba(201,168,76,.18);
+  color: var(--ghost);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,.06);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 2px;
+}
+
+.product-card {
+  background: rgba(240,232,213,.025);
+  border: 1px solid rgba(201,168,76,.08);
+  transition: all .35s;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  border-color: rgba(201,168,76,.28);
+  background: rgba(240,232,213,.05);
+  transform: translateY(-3px);
+}
+
+.card-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--ash);
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.product-card:hover .card-img-wrap img {
+  transform: scale(1.05);
+}
+
+.card-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: .42rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid;
+  backdrop-filter: blur(8px);
+}
+
+.badge-limited { color: #e8b4b4; border-color: rgba(139,26,26,.6); background: rgba(139,26,26,.35); }
+.badge-available { color: var(--gold); border-color: rgba(201,168,76,.4); background: rgba(10,7,4,.5); }
+.badge-sold { color: var(--ghost); border-color: rgba(212,201,184,.2); background: rgba(10,7,4,.5); opacity: .6; }
+
+.card-body { padding: 20px 22px 22px; }
+
+.card-sku {
+  font-family: 'Space Mono', monospace;
+  font-size: .44rem;
+  letter-spacing: .28em;
+  color: var(--gold);
+  opacity: .4;
+  margin-bottom: 7px;
+}
+
+.card-name {
+  font-family: 'Cinzel', serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--parchment);
+  line-height: 1.35;
+  margin-bottom: 5px;
+}
+
+.card-universe {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .8rem;
+  color: var(--ghost);
+  opacity: .55;
+  margin-bottom: 14px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid rgba(201,168,76,.08);
+}
+
+.card-price {
+  font-family: 'Space Mono', monospace;
+  font-size: .72rem;
+  color: var(--gold);
+  letter-spacing: .05em;
+}
+
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Space Mono', monospace;
+  font-size: .48rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.btn-wa:hover { background: var(--gold2); }
+
+/* Empty state */
+.empty-catalog {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px 40px;
+  opacity: .3;
+}
+.empty-catalog p {
+  font-family: 'Space Mono', monospace;
+  font-size: .55rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ghost);
+  margin-top: 20px;
+}
+
+/* ── ABOUT ── */
+#nosotros {
+  border-top: 1px solid rgba(201,168,76,.08);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.about-contract {
+  background: rgba(240,232,213,.025);
+  border: 1px solid rgba(201,168,76,.13);
+  padding: 44px 48px;
+  position: relative;
+}
+
+.about-contract::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(201,168,76,.05);
+  pointer-events: none;
+}
+
+.contract-label {
+  font-family: 'Cinzel', serif;
+  font-size: .75rem;
+  letter-spacing: .28em;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.contract-text {
+  font-size: 1rem;
+  color: var(--ghost);
+  line-height: 2;
+}
+
+.contract-text .hl { color: var(--parchment); font-style: normal; }
+
+.contract-sig {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(201,168,76,.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.sig-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .95rem;
+  color: var(--gold);
+  display: block;
+  margin-top: 4px;
+}
+
+.about-values { display: flex; flex-direction: column; gap: 24px; }
+
+.value-item {
+  border-left: 2px solid rgba(201,168,76,.2);
+  padding-left: 24px;
+  transition: border-color .3s;
+}
+.value-item:hover { border-left-color: var(--gold); }
+
+.value-num {
+  font-family: 'Space Mono', monospace;
+  font-size: .42rem;
+  letter-spacing: .35em;
+  color: var(--gold);
+  opacity: .4;
+  margin-bottom: 6px;
+}
+
+.value-title {
+  font-family: 'Cinzel', serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--parchment);
+  margin-bottom: 6px;
+  letter-spacing: .06em;
+}
+
+.value-desc {
+  font-size: .9rem;
+  color: var(--ghost);
+  line-height: 1.8;
+  opacity: .7;
+}
+
+/* ── TAGLINES STRIP ── */
+.taglines-strip {
+  border-top: 1px solid rgba(201,168,76,.08);
+  border-bottom: 1px solid rgba(201,168,76,.08);
+  overflow: hidden;
+  padding: 20px 0;
+  background: rgba(240,232,213,.015);
+}
+
+.taglines-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+}
+
+.taglines-track span {
+  font-family: 'Cinzel', serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--gold);
+  opacity: .5;
+  text-transform: uppercase;
+  padding: 0 48px;
+}
+
+.taglines-track span.sep {
+  color: var(--blood);
+  padding: 0;
+  opacity: .4;
+}
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── CONTACT ── */
+#contacto { border-top: 1px solid rgba(201,168,76,.08); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 60px;
+  align-items: start;
+}
+
+.contact-channels { display: flex; flex-direction: column; gap: 16px; }
+
+.channel-card {
+  background: rgba(240,232,213,.03);
+  border: 1px solid rgba(201,168,76,.1);
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  transition: all .3s;
+}
+
+.channel-card:hover {
+  border-color: rgba(201,168,76,.3);
+  background: rgba(201,168,76,.05);
+}
+
+.channel-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,168,76,.08);
+  border: 1px solid rgba(201,168,76,.18);
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.channel-info {}
+.channel-label {
+  font-family: 'Space Mono', monospace;
+  font-size: .44rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .5;
+  margin-bottom: 4px;
+}
+.channel-value {
+  font-family: 'Cinzel', serif;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--parchment);
+  letter-spacing: .05em;
+}
+
+.contact-fine-print {
+  background: rgba(240,232,213,.02);
+  border: 1px solid rgba(201,168,76,.1);
+  padding: 36px 40px;
+}
+
+.fine-title {
+  font-family: 'Cinzel', serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .1em;
+  margin-bottom: 20px;
+}
+
+.fine-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+.fine-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'IM Fell English', serif;
+  font-size: .9rem;
+  color: var(--ghost);
+  line-height: 1.7;
+  opacity: .75;
+}
+
+.fine-list li::before {
+  content: '▸';
+  color: var(--gold);
+  font-size: .65rem;
+  margin-top: 4px;
+  flex-shrink: 0;
+  opacity: .6;
+}
+
+.wa-big {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 16px 32px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Space Mono', monospace;
+  font-size: .62rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s;
+  font-weight: 700;
+}
+.wa-big:hover { background: var(--gold2); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(201,168,76,.1);
+  padding: 60px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  color: var(--gold);
+}
+
+.footer-fine {
+  font-family: 'Space Mono', monospace;
+  font-size: .42rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ghost);
+  opacity: .22;
+  text-align: center;
+  line-height: 1.9;
+}
+
+.footer-muse {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .72rem;
+  color: var(--ghost);
+  opacity: .18;
+}
+
+/* ── PRODUCT MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,7,4,.88);
+  backdrop-filter: blur(6px);
+  z-index: 9000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--ink2);
+  border: 1px solid rgba(201,168,76,.2);
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dim) transparent;
+}
+
+.modal::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201,168,76,.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--ghost);
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: .4;
+  z-index: 2;
+  transition: opacity .2s;
+}
+.modal-close:hover { opacity: 1; }
+
+.modal-img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  display: block;
+  background: var(--ash);
+}
+
+.modal-img-placeholder {
+  width: 100%;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ash);
+}
+
+.modal-body { padding: 32px 36px 36px; position: relative; z-index: 1; }
+
+.modal-badge { margin-bottom: 12px; }
+
+.modal-badge span {
+  font-family: 'Space Mono', monospace;
+  font-size: .44rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid;
+}
+
+.modal-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--parchment);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.modal-universe {
+  font-style: italic;
+  color: var(--ghost);
+  opacity: .55;
+  font-size: .9rem;
+  margin-bottom: 6px;
+}
+
+.modal-sku {
+  font-family: 'Space Mono', monospace;
+  font-size: .44rem;
+  letter-spacing: .28em;
+  color: var(--gold);
+  opacity: .35;
+  margin-bottom: 20px;
+}
+
+.modal-desc {
+  color: var(--ghost);
+  font-size: .95rem;
+  line-height: 1.9;
+  opacity: .75;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(201,168,76,.08);
+}
+
+.modal-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.meta-block { }
+.meta-label {
+  font-family: 'Space Mono', monospace;
+  font-size: .42rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .4;
+  margin-bottom: 4px;
+}
+.meta-value {
+  font-family: 'Cinzel', serif;
+  font-size: .78rem;
+  color: var(--parchment);
+  font-weight: 600;
+}
+
+.modal-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.modal-gallery {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.modal-gallery img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid rgba(201,168,76,.12);
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.modal-gallery img:hover { border-color: var(--gold); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: rgba(201,168,76,.25); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links, .nav-wa { display: none; }
+  .hamburger { display: block; }
+  .section { padding: 70px 28px; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  footer { flex-direction: column; align-items: center; text-align: center; padding: 48px 28px; }
+  .hero-sigil { width: 260px; height: 260px; }
+  .ring:nth-child(1) { width: 400px; height: 400px; margin: -200px 0 0 -200px; }
+  .ring:nth-child(2) { width: 560px; height: 560px; margin: -280px 0 0 -280px; }
+  .ring:nth-child(3) { width: 280px; height: 280px; margin: -140px 0 0 -140px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-brand" href="#hero">
+    <svg width="28" height="28" viewBox="0 0 120 120" fill="none">
+      <circle cx="60" cy="60" r="55" stroke="#c9a84c" stroke-width="1.5"/>
+      <polygon points="60,12 73,46 110,46 82,67 93,101 60,80 27,101 38,67 10,46 47,46" stroke="#c9a84c" stroke-width="1.2" fill="rgba(201,168,76,.06)"/>
+      <ellipse cx="60" cy="60" rx="13" ry="9" stroke="#c9a84c" stroke-width="1.4" fill="rgba(201,168,76,.1)"/>
+      <circle cx="60" cy="60" r="4.5" fill="#c9a84c"/>
+    </svg>
+    <div class="nav-logo-mark">
+      Small Print Collective
+      <small>Coleccionables · Bogotá</small>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+
+  <a class="nav-wa" href="https://wa.me/573015528219?text=Hola%20Small%20Print%20Collective%2C%20quiero%20saber%20más%20sobre%20sus%20productos." target="_blank">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#catalogo" onclick="toggleMenu()">Catálogo</a>
+  <a href="#nosotros" onclick="toggleMenu()">Nosotros</a>
+  <a href="#contacto" onclick="toggleMenu()">Contacto</a>
+  <a href="https://wa.me/573015528219" target="_blank" style="color:var(--gold);">WhatsApp ↗</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-radial"></div>
+  <div class="ring"></div>
+  <div class="ring"></div>
+  <div class="ring"></div>
+
+  <svg class="hero-sigil" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="95" stroke="#c9a84c" stroke-width="1.5"/>
+    <circle cx="100" cy="100" r="75" stroke="#c9a84c" stroke-width=".8"/>
+    <polygon points="100,10 118.8,68 180,68 132,104 151,162 100,126 49,162 68,104 20,68 81.2,68" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+    <circle cx="100" cy="100" r="30" stroke="#c9a84c" stroke-width=".8"/>
+    <ellipse cx="100" cy="100" rx="16" ry="11" stroke="#c9a84c" stroke-width="1.2" fill="rgba(201,168,76,.08)"/>
+    <circle cx="100" cy="100" r="5" fill="#c9a84c"/>
+  </svg>
+
+  <p class="hero-eyebrow">Coleccionables · Anime · Cine · Cultura Geek</p>
+
+  <h1 class="hero-title">
+    <span class="line-the">The</span>
+    <span class="line-print">Small Print</span>
+    <span class="line-collective">Collective</span>
+  </h1>
+
+  <div class="hero-ornament">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#c9a84c"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6L12 17.3l-6.2 4.4 2.4-7.6L2 9.6h7.6z"/></svg>
+  </div>
+
+  <p class="hero-tagline">
+    Donde cada coleccionable es un pacto con la pasión.<br>
+    Lee la letra pequeña: <em>esto no tiene cura.</em>
+  </p>
+
+  <div class="hero-ctas">
+    <a class="btn-hero-primary" href="#catalogo">Ver Catálogo</a>
+    <a class="btn-hero-ghost" href="#nosotros">El Pacto</a>
+  </div>
+
+  <div class="hero-stamp">⚉ Firmado en tinta permanente ⚉</div>
+</section>
+
+<!-- TAGLINES MARQUEE -->
+<div class="taglines-strip">
+  <div class="taglines-track" id="marquee">
+    <span>Read the fine print</span><span class="sep">✦</span>
+    <span>Coleccionables para almas sin cláusulas de devolución</span><span class="sep">✦</span>
+    <span>Ediciones que roban el alma</span><span class="sep">✦</span>
+    <span>Small Print · Grandes obsesiónes</span><span class="sep">✦</span>
+    <span>Tu pasión tiene letra pequeña. La vendemos</span><span class="sep">✦</span>
+    <span>Read the fine print</span><span class="sep">✦</span>
+    <span>Coleccionables para almas sin cláusulas de devolución</span><span class="sep">✦</span>
+    <span>Ediciones que roban el alma</span><span class="sep">✦</span>
+    <span>Small Print · Grandes obsesiónes</span><span class="sep">✦</span>
+    <span>Tu pasión tiene letra pequeña. La vendemos</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<!-- ── CATÁLOGO ── -->
+<section id="catalogo">
+  <div class="section">
+    <div class="catalog-header">
+      <div>
+        <p class="section-eyebrow">§ 01 — Las Reliquias</p>
+        <h2 class="section-title">Catálogo del Colectivo</h2>
+        <p class="section-lead">Piezas selecciónadas para los que ya firmaron el contrato.</p>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterProducts('all', this)">Todos</button>
+        <button class="filter-btn" onclick="filterProducts('available', this)">Disponibles</button>
+        <button class="filter-btn" onclick="filterProducts('limited', this)">Ed. Limitada</button>
+        <button class="filter-btn" onclick="filterProducts('sold', this)">Agotados</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ── SOBRE NOSOTROS ── -->
+<section id="nosotros">
+  <div class="section">
+    <p class="section-eyebrow">§ 02 — El Pacto</p>
+    <h2 class="section-title">Sobre Small Print Collective</h2>
+
+    <div class="about-grid">
+      <div class="about-contract">
+        <p class="contract-label">⚉ Términos & Condiciones ⚉</p>
+        <div class="contract-text">
+          <p>Existe una <span class="hl">letra pequeña</span> en el mundo del coleccionismo que nadie te advierte al principio. La lees cuando ya es tarde. Cuando el espacio de tu cuarto ha sido reconfigurado alrededor de una vitrina.</p>
+          <br>
+          <p><span class="hl">Small Print Collective</span> no vende figuras. Vende los términos de ese pacto: artículos únicos de anime, cine y cultura geek, selecciónados para los que ya firmaron.</p>
+          <br>
+          <p>La cláusula final es simple: <em>quien colecciona con alma, nunca para.</em></p>
+        </div>
+        <div class="contract-sig">
+          <div style="font-family:'IM Fell English',serif;font-size:.82rem;color:var(--ghost);">
+            El Coleccionista:
+            <span class="sig-name">_________________</span>
+          </div>
+          <div style="font-family:'IM Fell English',serif;font-size:.82rem;color:var(--ghost);text-align:right;">
+            La Marca:
+            <span class="sig-name">Small Print Co.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-values">
+        <div class="value-item">
+          <div class="value-num">Cláusula I</div>
+          <div class="value-title">Curaduría con alma</div>
+          <div class="value-desc">Cada pieza es selecciónada a mano. No somos un catálogo masivo — somos un santuario para coleccionistas que distinguen.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">Cláusula II</div>
+          <div class="value-title">Ediciones que importan</div>
+          <div class="value-desc">Figuras PVC, vinilos, artículos exclusivos de anime, cine y cultura geek. Primera edición siempre sobre re-impresión.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">Cláusula III</div>
+          <div class="value-title">Comunidad del pacto</div>
+          <div class="value-desc">Somos cómplices de la obsesión. El coleccionismo no es un hobby — es una forma de amar los universos que nos formaron.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">Cláusula IV</div>
+          <div class="value-title">Bogotá como base</div>
+          <div class="value-desc">Operamos desde Bogotá con envíos a toda Colombia. Cada paquete es un grimorio: la experiencia del unboxing es parte del pacto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <div class="section">
+    <p class="section-eyebrow">§ 03 — El Trato</p>
+    <h2 class="section-title">Haz el Trato</h2>
+    <p class="section-lead">Para pedidos, consultas de disponibilidad y ediciones especiales — escríbenos directamente.</p>
+
+    <div class="contact-grid">
+      <div class="contact-channels">
+        <a class="channel-card" href="https://wa.me/573015528219?text=Hola%20SPC%2C%20quiero%20consultar%20sobre%20un%20producto." target="_blank">
+          <div class="channel-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#c9a84c"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div class="channel-info">
+            <div class="channel-label">WhatsApp Principal</div>
+            <div class="channel-value">+57 300 000 0000</div>
+          </div>
+        </a>
+
+        <a class="channel-card" href="mailto:hola@smallprintcollective.com">
+          <div class="channel-icon" style="font-size:20px; color:var(--gold);">@</div>
+          <div class="channel-info">
+            <div class="channel-label">Email</div>
+            <div class="channel-value">hola@smallprintcollective.com</div>
+          </div>
+        </a>
+
+        <a class="channel-card" href="https://instagram.com/smallprintcollective" target="_blank">
+          <div class="channel-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#c9a84c" stroke="none"/></svg>
+          </div>
+          <div class="channel-info">
+            <div class="channel-label">Instagram</div>
+            <div class="channel-value">@smallprintcollective</div>
+          </div>
+        </a>
+
+        <a class="channel-card" href="https://tiktok.com/@smallprintcollective" target="_blank">
+          <div class="channel-icon" style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--gold);letter-spacing:.05em;">TT</div>
+          <div class="channel-info">
+            <div class="channel-label">TikTok</div>
+            <div class="channel-value">@smallprintcollective</div>
+          </div>
+        </a>
+      </div>
+
+      <div>
+        <div class="contact-fine-print">
+          <div class="fine-title">⚉ La letra pequeña del pedido</div>
+          <ul class="fine-list">
+            <li>Escríbenos por WhatsApp indicando el producto y tu ciudad. Te confirmamos disponibilidad en menos de 24h.</li>
+            <li>Manejamos envíos a toda Colombia por Coordinadora, Servientrega o Interrapidísimo.</li>
+            <li>Pago contra entrega disponible en Bogotá. Transferencia o Nequi para envíos nacionales.</li>
+            <li>Las ediciones limitadas se reservan con el 50% de anticipo. El cupo es el cupo — no hay más.</li>
+            <li>Cada pedido llega en empaque de marca. El pacto incluye la experiencia completa.</li>
+          </ul>
+        </div>
+
+        <a class="wa-big" href="https://wa.me/573015528219?text=Hola%20Small%20Print%20Collective%2C%20quiero%20hacer%20un%20pedido." target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar disponibilidad
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Small Print Collective</div>
+  <div class="footer-fine">
+    ⚉ &nbsp; Cada pieza es una cláusula del pacto &nbsp; ⚉<br>
+    La letra pequeña siempre fue visible. Simplemente elegiste no leerla.
+  </div>
+  <div class="footer-muse">Inspirado en "The Small Print" — Muse, Absolution (2003)</div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-img-wrap"></div>
+    <div class="modal-body">
+      <div class="modal-badge"><span id="modal-badge-span"></span></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-universe" id="modal-universe"></div>
+      <div class="modal-sku" id="modal-sku"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-meta" id="modal-meta"></div>
+      <div class="modal-price" id="modal-price"></div>
+      <div class="modal-gallery" id="modal-gallery"></div>
+      <a class="wa-big" id="modal-wa-btn" href="#" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Quiero este — Consultar por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG — edita aquí tu número de WhatsApp ──
+const WA_NUMBER = '573015528219'; // Reemplaza con tu número real (sin + ni espacios)
+
+// ── URL del catálogo en GitHub (se actualiza automáticamente) ──
+const CATALOG_URLS = [
+  'spc-catalogo-2026-06-03.min.json',
+  'spc-catalogo-2026-06-03-corregido.json',
+  'spc-catalogo.json'
+];
+
+// Productos de ejemplo (se muestran si el JSON no carga o está vacío)
+const demoProducts = [
+  {
+    id: 'demo1',
+    name: 'Roronoa Zoro — Wano Arc',
+    sku: 'SPC-00001',
+    price: 185000,
+    status: 'available',
+    franchise: 'One Piece · Toei Animation',
+    scale: '1/8 · 24cm',
+    desc: 'Figura PVC premium de Zoro en su arco de Wano. Edición especial con katanas intercambiables y base de madera grabada. Acabado en pintura al horno con detalles pintados a mano.',
+    edition: '',
+    tags: ['anime', 'shonen', 'one piece'],
+    image: null,
+    gallery: []
+  },
+  {
+    id: 'demo2',
+    name: 'Makima — Control Devil',
+    sku: 'SPC-00002',
+    price: 210000,
+    status: 'limited',
+    franchise: 'Chainsaw Man · MAPPA',
+    scale: '1/7 · 26cm',
+    desc: 'Figura de Makima en su forma de Control Devil. Edición limitada a 200 unidades. Incluye cadenas de resina translúcida y certificado de autenticidad numerado.',
+    edition: '#47 de 200',
+    tags: ['anime', 'dark', 'chainsaw man'],
+    image: null,
+    gallery: []
+  },
+  {
+    id: 'demo3',
+    name: 'Guts — Black Swordsman',
+    sku: 'SPC-00003',
+    price: 245000,
+    status: 'sold',
+    franchise: 'Berserk · Studio Gaga',
+    scale: '1/6 · 30cm',
+    desc: 'El Espadachín Negro en su versión más icónica. Figura de resina de alta calidad con Dragonslayer en posición de ataque. Ya agotada — disponible en lista de espera.',
+    edition: 'Sold Out',
+    tags: ['manga', 'dark fantasy', 'berserk'],
+    image: null,
+    gallery: []
+  },
+  {
+    id: 'demo4',
+    name: 'Violet Evergarden',
+    sku: 'SPC-00004',
+    price: 195000,
+    status: 'available',
+    franchise: 'Violet Evergarden · KyoAni',
+    scale: '1/8 · 22cm',
+    desc: 'La Muñeca de Auto Memoria en su uniforme de gala. Figura PVC con detalles en el cabello y guantes de gran realismo. Base decorativa incluida.',
+    edition: '',
+    tags: ['anime', 'drama', 'kyoani'],
+    image: null,
+    gallery: []
+  }
+];
+
+// ── CARGAR PRODUCTOS ──
+let products = [];
+
+async function loadProducts() {
+  try {
+    let loaded = [];
+    for (const url of CATALOG_URLS) {
+      const res = await fetch(url + '?t=' + Date.now());
+      if (!res.ok) continue;
+      const data = await res.json();
+      loaded = Array.isArray(data.products) ? data.products : [];
+      if (loaded.length > 0) break;
+    }
+    products = loaded.length > 0 ? loaded : demoProducts;
+  } catch (e) {
+    // Fallback: intenta localStorage, luego demo
+    const local = JSON.parse(localStorage.getItem('spc_products') || '[]');
+    products = local.length > 0 ? local : demoProducts;
+  }
+  renderProducts();
+}
+
+// ── RENDER PRODUCTS ──
+function renderProducts(filter = 'all') {
+  const grid = document.getElementById('products-grid');
+  const filtered = filter === 'all' ? products : products.filter(p => p.status === filter);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-catalog">
+      <svg width="50" height="50" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="55" stroke="#c9a84c" stroke-width="1.5" opacity=".25"/><polygon points="60,12 73,46 110,46 82,67 93,101 60,80 27,101 38,67 10,46 47,46" stroke="#c9a84c" stroke-width="1" fill="none" opacity=".25"/></svg>
+      <p>Sin productos en esta categoría</p>
+    </div>`;
+    return;
+  }
+
+  const badgeClass = { available: 'badge-available', limited: 'badge-limited', sold: 'badge-sold' };
+  const badgeLabel = { available: 'Disponible', limited: 'Ed. Limitada', sold: 'Agotado' };
+
+  grid.innerHTML = filtered.map(p => {
+    const imgHtml = p.image
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy">`
+      : `<div class="card-img-placeholder">
+          <svg width="48" height="48" viewBox="0 0 120 120" fill="none" opacity=".2">
+            <circle cx="60" cy="60" r="55" stroke="#c9a84c" stroke-width="1.5"/>
+            <polygon points="60,12 73,46 110,46 82,67 93,101 60,80 27,101 38,67 10,46 47,46" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+            <ellipse cx="60" cy="60" rx="13" ry="9" stroke="#c9a84c" stroke-width="1.4"/>
+            <circle cx="60" cy="60" r="4.5" fill="#c9a84c"/>
+          </svg>
+        </div>`;
+
+    const price = p.price ? `$${p.price.toLocaleString('es-CO')}` : 'Consultar';
+    const waText = encodeURIComponent(`Hola Small Print Collective, me interesa el producto: ${p.name} (${p.sku}). ¿Está disponible?`);
+
+    return `<div class="product-card" onclick="openModal('${p.id}')">
+      <div class="card-img-wrap">
+        ${imgHtml}
+        <span class="card-badge ${badgeClass[p.status]}">${badgeLabel[p.status]}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-sku">${p.sku}</div>
+        <div class="card-name">${p.name}</div>
+        ${p.franchise ? `<div class="card-universe">${p.franchise}</div>` : ''}
+        <div class="card-footer">
+          <div class="card-price">${price}</div>
+          <a class="btn-wa" href="https://wa.me/${WA_NUMBER}?text=${waText}" target="_blank" onclick="event.stopPropagation()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Consultar
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterProducts(status, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderProducts(status);
+}
+
+// ── PRODUCT MODAL ──
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+
+  const badgeClass = { available: 'badge-available', limited: 'badge-limited', sold: 'badge-sold' };
+  const badgeLabel = { available: 'Disponible', limited: 'Ed. Limitada', sold: 'Agotado' };
+
+  // Image
+  const imgWrap = document.getElementById('modal-img-wrap');
+  imgWrap.innerHTML = p.image
+    ? `<img class="modal-img" src="${p.image}" alt="${p.name}">`
+    : `<div class="modal-img-placeholder"><svg width="60" height="60" viewBox="0 0 120 120" fill="none" opacity=".15"><circle cx="60" cy="60" r="55" stroke="#c9a84c" stroke-width="1.5"/><polygon points="60,12 73,46 110,46 82,67 93,101 60,80 27,101 38,67 10,46 47,46" stroke="#c9a84c" stroke-width="1.2" fill="none"/><circle cx="60" cy="60" r="4.5" fill="#c9a84c"/></svg></div>`;
+
+  document.getElementById('modal-badge-span').className = badgeClass[p.status];
+  document.getElementById('modal-badge-span').textContent = badgeLabel[p.status];
+  document.getElementById('modal-title').textContent = p.name;
+  document.getElementById('modal-universe').textContent = p.franchise || '';
+  document.getElementById('modal-sku').textContent = p.sku ? `SKU · ${p.sku}` : '';
+  document.getElementById('modal-desc').textContent = p.desc || 'Sin descripción disponible.';
+  document.getElementById('modal-price').textContent = p.price ? `$${p.price.toLocaleString('es-CO')}` : 'Consultar precio';
+
+  // Meta
+  const metaItems = [];
+  if (p.scale) metaItems.push({ label: 'Escala', value: p.scale });
+  if (p.edition) metaItems.push({ label: 'Edición', value: p.edition });
+  if (p.tags && p.tags.length) metaItems.push({ label: 'Tags', value: p.tags.join(' · ') });
+  document.getElementById('modal-meta').innerHTML = metaItems.map(m =>
+    `<div class="meta-block"><div class="meta-label">${m.label}</div><div class="meta-value">${m.value}</div></div>`
+  ).join('');
+
+  // Gallery
+  const gallery = document.getElementById('modal-gallery');
+  gallery.innerHTML = (p.gallery || []).map(src =>
+    `<img src="${src}" onclick="document.querySelector('.modal-img') && (document.querySelector('.modal-img').src = '${src}')">`
+  ).join('');
+
+  // WhatsApp link
+  const waText = encodeURIComponent(`Hola Small Print Collective, me interesa el producto: ${p.name} (${p.sku}). ¿Está disponible?`);
+  document.getElementById('modal-wa-btn').href = `https://wa.me/${WA_NUMBER}?text=${waText}`;
+
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('product-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('product-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('product-modal')) closeModal();
+});
+
+// ── MOBILE MENU ──
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+// ── INIT ──
+loadProducts();
+</script>
+</body>
+</html>
